@@ -1,14 +1,9 @@
 ---
-title: API Reference
+title: Proband Connect API Reference
 
 language_tabs:
   - shell
-  - ruby
-  - python
-  - javascript
-
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
   - <a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a>
 
 includes:
@@ -19,50 +14,42 @@ search: true
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
-
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
-
-This example API documentation page was created with [Slate](https://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
+This is the documentation for the Proband Connect REST API.
 
 # Authentication
 
-> To authorize, use this code:
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
+> To get a valid session id, use the following code
 
 ```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
+
+curl 'https://probandapp.com/connect/api-token-auth/' \
+      -H 'Content-Type: application/json' \
+     --data-binary '{"username": "jeffmax",
+                     "password": "asecret",
+                     "device":   "unique device id"}' \
+     --compressed
+
 ```
 
-```javascript
-const kittn = require('kittn');
+> Make sure to replace `unique device id` with a unique device id associated with your user.
+> The above command returns JSON structured like this:
 
-let api = kittn.authorize('meowmeowmeow');
+```json
+    {"token":"f8f6ba3b39e83568ea17135d3a836d93e84caf93"}
 ```
 
-> Make sure to replace `meowmeowmeow` with your API key.
+The Proband Connect API requires that you first obtain a session ID using a valid `user`, `password`, and `device_id`. 
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+### JSON Query Parameters
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
+Parameter  | Description
+---------  | -----------
+user       | Username
+pssword    | Password
+device_id  | Unique device/activity ID
 
 <aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+ Each user must be configured with a device/activity id for each unique device or role that will be accessing the API. This can be done through the Django Admin interface.
 </aside>
 
 # Kittens
@@ -94,29 +81,6 @@ const kittn = require('kittn');
 let api = kittn.authorize('meowmeowmeow');
 let kittens = api.kittens.get();
 ```
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
-```
-
-This endpoint retrieves all kittens.
 
 ### HTTP Request
 
