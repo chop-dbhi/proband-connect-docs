@@ -18,6 +18,8 @@ This is the documentation for the Proband Connect REST API.
 
 # Authentication
 
+`/api-token-auth/`
+
 > To get a valid session id, use the following code
 
 ```shell
@@ -40,7 +42,11 @@ curl 'https://probandapp.com/connect/api-token-auth/' \
 
 The Proband Connect API requires that you first obtain a session ID using a valid `user`, `password`, and `device_id`. 
 
-### JSON Query Parameters
+### HTTP Request
+
+`POST http://probandapp.com/connect/api-token-auth/`
+
+#### JSON POST Payload
 
 Parameter  | Description
 ---------  | -----------
@@ -52,102 +58,84 @@ device_id  | Unique device/activity ID
  Each user must be configured with a device/activity id for each unique device or role that will be accessing the API. This can be done through the Django Admin interface.
 </aside>
 
-# Kittens
+Proband Connect requires the returned seesion key to be included in all API requests to the server in a header that looks like the following:
 
-## Get All Kittens
+    Authorization: SESSIONID
 
-```ruby
-require 'kittn'
+# Pedigrees
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
+`/pedigrees`
 
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
+## GET Request
 
 ```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
+
+curl 'https://probandapp.com/connect/pedigrees/'
+
 ```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
-```
-
-### HTTP Request
-
-`GET http://example.com/api/kittens`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
-```
-
-> The above command returns JSON structured like this:
+> This request will return a JSON list of objects containing the Pedigree UUID and list of groups the pedigree belongs to:
 
 ```json
+ 
+[ 
+  { "uuid": "1aksjdfl2j3q234lskdjfadfjhj98", 
+    "groups":[ {"name": "Genetics",
+                "id"  : 1},
+             ]
+  },
+]
+
+```
+### HTTP Request
+
+Return a list of pedigrees the authenticated user has access to:
+
+`GET https://probandapp.com/connect/pedigrees/`
+
+## POST
+
+```shell
+
+curl 'https://probandapp.com/connect/pedigrees/' \
+      -H 'Content-Type: application/json' \
+     --data-binary '[{"force": False,
+                     "version" : 2,
+                     "uuid": "1aksjdfl2j3q234lskdjfadfjhj98",
+                     "content": "<pedigree></pedigree>"},]' \
+     --compressed
+
+```
+> This will return a list JSON objects listing which UUID updates failed, which succeeded, and which were deleted from the server (so could not be updated):
+
+```json
+ 
 {
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+  "failed":  [ { "uuid": "1aksjdfl2j3q234lskdjfadfjhj98", 
+                 "error": "UUID Unknown" },
+  ],
+  "success": [ { "uuid": "1aksjdfl2j3q234lskdjfadfjhj98",
+                 "version": 3,
+                 "hash": "MD5 HASH of content "},
+  ],
+  "deleted": ["asdkjfklasdjflkasjdflkjasdflksdjafkljsd"]
 }
+
 ```
 
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+This endpoint allows you to create/update multiple pedigrees at once.
 
 ### HTTP Request
 
-`GET http://example.com/kittens/<ID>`
+`POST https://probandapp.com/connect/pedigrees/'
 
-### URL Parameters
+#### JSON POST Payload
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
+A list of JSON objects, each with the follow properties:
+
+Parameter | Type    | Description
+--------- | ------  | -----
+force     | Boolean | Whether or not force write over a new version
+content   | String  | XML pedigree
+uuid      | String  | Pedigree UUID
+version   | Integer | Pedigree version
 
