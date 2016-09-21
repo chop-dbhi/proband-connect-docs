@@ -7,7 +7,6 @@ toc_footers:
   - <a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a>
 
 includes:
-  - errors
 
 search: true
 ---
@@ -52,7 +51,7 @@ Parameter  | Description
 ---------  | -----------
 user       | Username
 pssword    | Password
-device_id  | Unique device/activity ID
+device     | Unique device/activity ID
 
 <aside class="notice">
  Each user must be configured with a device/activity id for each unique device or role that will be accessing the API. This can be done through the Django Admin interface.
@@ -60,13 +59,13 @@ device_id  | Unique device/activity ID
 
 Proband Connect requires the returned seesion key to be included in all API requests to the server in a header that looks like the following:
 
-    Authorization: SESSIONID
+     Authorization: f8f6ba3b39e83568ea17135d3a836d93e84caf93
 
 # Pedigrees
 
 `/pedigrees`
 
-## GET Request
+## GET
 
 ```shell
 
@@ -86,6 +85,7 @@ curl 'https://probandapp.com/connect/pedigrees/'
 ]
 
 ```
+
 ### HTTP Request
 
 Return a list of pedigrees the authenticated user has access to:
@@ -126,7 +126,7 @@ This endpoint allows you to create/update multiple pedigrees at once.
 
 ### HTTP Request
 
-`POST https://probandapp.com/connect/pedigrees/'
+`POST https://probandapp.com/connect/pedigrees/`
 
 #### JSON POST Payload
 
@@ -134,7 +134,7 @@ A list of JSON objects, each with the follow properties:
 
 Parameter | Type    | Description
 --------- | ------  | -----
-force     | Boolean | Whether or not force write over a new version
+force     | Boolean | Whether or not to force write over a newer pedigree version
 content   | String  | XML pedigree
 uuid      | String  | Pedigree UUID
 version   | Integer | Pedigree version
