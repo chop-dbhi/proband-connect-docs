@@ -54,7 +54,7 @@ pssword    | Password
 device     | Unique device/activity ID
 
 <aside class="notice">
- Each user must be configured with a device/activity id for each unique device or role that will be accessing the API. This can be done through the Django Admin interface.
+ Each user must be configured with a device/activity ID for each unique device or role that will be accessing the API. This can be done through the Django Admin interface (it is called a DeviceToken in the admin). You can either create one associated to the user with a preset ID or leave the ID empty. If left empty, the first time the user authenticates and reports an ID, that ID will be assigned. From then on, only that ID will work.
 </aside>
 
 Proband Connect requires the returned seesion key to be included in all API requests to the server in a header that looks like the following:
@@ -69,7 +69,8 @@ Proband Connect requires the returned seesion key to be included in all API requ
 
 ```shell
 
-curl 'https://probandapp.com/connect/pedigrees/'
+curl 'https://probandapp.com/connect/pedigrees/' \
+  -H 'Authorization: f8f6ba3b39e83568ea17135d3a836d93e84caf93'
 
 ```
 > This request will return a JSON list of objects containing the Pedigree UUID and list of groups the pedigree belongs to:
@@ -98,6 +99,7 @@ Return a list of pedigrees the authenticated user has access to:
 
 curl 'https://probandapp.com/connect/pedigrees/' \
       -H 'Content-Type: application/json' \
+      -H 'Authorization: f8f6ba3b39e83568ea17135d3a836d93e84caf93' \
      --data-binary '[{"force": False,
                      "version" : 2,
                      "uuid": "1aksjdfl2j3q234lskdjfadfjhj98",
@@ -139,3 +141,31 @@ content   | String  | XML pedigree
 uuid      | String  | Pedigree UUID
 version   | Integer | Pedigree version
 
+
+# Pedigree
+
+`/pedigree/`
+
+## GET
+
+```shell
+
+curl 'https://probandapp.com/connect/pedigree/1aksjdfl2j3q234lskdjfadfjhj98/?ifNewer=1' \
+     -H 'Authorization: f8f6ba3b39e83568ea17135d3a836d93e84caf93' 
+```
+> This will return a JSON object representing pedigree with UUID 1aksjdfl2j3q234lskdjfadfjhj98 if there is a version on the server newer than 1. The `ifNewer` parameter is optional. 
+
+```json
+ 
+{
+  "failed":  [ { "uuid": "1aksjdfl2j3q234lskdjfadfjhj98", 
+                 "error": "UUID Unknown" },
+  ],
+  "success": [ { "uuid": "1aksjdfl2j3q234lskdjfadfjhj98",
+                 "version": 3,
+                 "hash": "MD5 HASH of content "},
+  ],
+  "deleted": ["asdkjfklasdjflkasjdflkjasdflksdjafkljsd"]
+}
+
+```
