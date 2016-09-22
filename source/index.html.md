@@ -13,7 +13,7 @@ search: true
 
 # Introduction
 
-This is the documentation for the Proband Connect REST API. Each pedigree is be default represented by a UUID. Optionally, with some local customization, there is also a general identifer that can be established which is used by the `/published/` and `/pdf/` 3rd party integration endpoints (described below).
+This is the documentation for the Proband Connect REST API. Each pedigree is by default represented by a UUID. Optionally, with some local customization, there is also a general identifer that can be established which is used by the `/published/` and `/pdf/` 3rd party integration endpoints (described below).
 
 # Authentication
 
@@ -27,19 +27,18 @@ curl 'https://probandapp.com/connect/api-token-auth/' \
       -H 'Content-Type: application/json' \
      --data-binary '{"username": "jeffmax",
                      "password": "asecret",
-                     "device":   "unique device id"}' \
+                     "device":   "20f89335b6f1811a86039d80022cf36b4cb27ae7"}' \
      --compressed
 
 ```
 
-> Make sure to replace `unique device id` with a unique device id associated with your user.
 > The above command returns JSON structured like this:
 
 ```json
     {"token":"f8f6ba3b39e83568ea17135d3a836d93e84caf93"}
 ```
 
-The Proband Connect API requires that you first obtain a session ID using a valid `user`, `password`, and `device_id`. 
+The Proband Connect API requires that you first obtain a session ID using a valid `user`, `password`, and `device/activity id`. 
 
 ### HTTP Request
 
@@ -62,6 +61,9 @@ Proband Connect requires the returned seesion key to be included in all API requ
      Authorization: f8f6ba3b39e83568ea17135d3a836d93e84caf93
 
 # Browse
+`/pedigrees/browse/`
+
+## GET
 
 ```shell
 
@@ -84,10 +86,6 @@ curl 'https://probandapp.com/connect/pedigrees/browse/?filter=Doe' \
 ]
 
 ```
-
-`/pedigrees/browse/`
-
-## GET
 
 Search for pedigrees by name or group. Returns 10 matches at a time. Use `offset` parameter to paginate.
 
@@ -353,6 +351,10 @@ This endpoint is meant to be used as part of a 3rd party integrations and will r
 
 # UUIDS
 
+`/uuids/`
+
+# GET
+
 ```shell
 
 curl 'https://probandapp.com/connect/uuids/?count=5' \
@@ -375,10 +377,6 @@ curl 'https://probandapp.com/connect/uuids/?count=5' \
 
 ```
 
-`/uuids/`
-
-# GET
-
 Get UUIDS for creating new pedigrees. The server is responsible for generating all UUIDs.
 
 ### HTTP Request
@@ -393,7 +391,7 @@ count     | Integer | Number of UUIDs requested. Optional. Default is 50.
 
 # PDF
 
-`/pdf/<PATIENT OR FAMILY ID`
+`/pdf/<PATIENT OR FAMILY ID>`
 
 ## GET
 
