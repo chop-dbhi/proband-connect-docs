@@ -139,7 +139,7 @@ Return a list of pedigrees the authenticated user has access to:
 curl 'https://probandapp.com/connect/pedigrees/' \
       -H 'Content-Type: application/json' \
       -H 'Authorization: f8f6ba3b39e83568ea17135d3a836d93e84caf93' \
-     --data-binary '[{"force": False,
+     --data-binary '[{"force": false,
                      "version" : 2,
                      "uuid": "cb434cab-aae6-4e21-9485-a6ef63fe8341",
                      "content": "<pedigree></pedigree>"},]' \
@@ -158,7 +158,7 @@ curl 'https://probandapp.com/connect/pedigrees/' \
                  "version": 3,
                  "hash": "MD5 HASH of content "},
   ],
-  "deleted": ["asdkjfklasdjflkasjdflkjasdflksdjafkljsd"]
+  "deleted": ["asdkjfklasdjflkasjdflkjasdflksdjafkljsd",]
 }
 
 ```
@@ -193,21 +193,23 @@ curl 'https://probandapp.com/connect/pedigree/cb434cab-aae6-4e21-9485-a6ef63fe83
      -H 'Authorization: f8f6ba3b39e83568ea17135d3a836d93e84caf93' 
 ```
 
-> This will return a JSON object representing the pedigree with UUID `cb434cab-aae6-4e21-9485-a6ef63fe8341` if there is a version on the server newer than 1. The `ifNewer` parameter is optional. 
+> This will return a JSON object representing the pedigree with UUID `cb434cab-aae6-4e21-9485-a6ef63fe8341` if there is a version on the server newer than 1. The `ifNewer` parameter is optional. The update parameter is only included if the `ifNewer` query param is included. If the returned `update` propery is false, there will be no `content` property supplied in the return (because the requestor already has it.)
 
 ```json
  { 
-        "update": True,  #This is only present when ifNewer is used, True if a newer pedigree is available
+        "update": true, 
         "version" : 2,
         "uuid": "cb434cab-aae6-4e21-9485-a6ef63fe8341", 
-        "hash: "<MD5 Hash of Pedigree>"",
-        "content":"<pedigree></pedigree>", # Not present if "update" is False
+        "hash": "<MD5 Hash of Pedigree>",
+        "content":"<pedigree></pedigree>", 
         "user": "probanduser", 
         "device": "<device/activity ID>",
-        "published": False, # Whether this Pedigree is marked as published and has PDF on File
-        "groups":[{'name':"genetics", "id":1},]
+        "published": false, 
+        "groups":[{"name": "genetics", "id": 1},]
 }
 ```
+
+> The `published` parameter refers to whether the pedigree has been marked as published and has a PDF available.
 
 This endpoint is used to retrieve a pedigree using its UUID. 
 
@@ -239,9 +241,9 @@ curl 'https://probandapp.com/connect/pedigree/' \
 ```json
 { 
         "uuid": "cb434cab-aae6-4e21-9485-a6ef63fe8341", 
-        "hash: "<MD5 Hash of Pedigree>",
-        "published: False, # Whether this Pedigree is marked as published and has PDF on File
-        "version": 1,
+        "hash": "<MD5 Hash of Pedigree>",
+        "published": false,
+        "version": 1
 }
 ```
 
@@ -280,9 +282,9 @@ curl 'https://probandapp.com/connect/pedigree/1aksjdfl2j3q234lskdjfadfjhj9' \
 ```json
 { 
         "uuid": "cb434cab-aae6-4e21-9485-a6ef63fe8341", 
-        "hash: "<MD5 Hash of Pedigree>",
-        "published: False, # Whether this Pedigree is marked as published and has PDF on File
-        "version": 4,
+        "hash": "<MD5 Hash of Pedigree>",
+        "published": false, 
+        "version": 4
 }
 ```
 
@@ -318,7 +320,7 @@ curl 'https://probandapp.com/connect/pedigree/1aksjdfl2j3q234lskdjfadfjhj9/' \
 ```json
 { 
         "uuid": "cb434cab-aae6-4e21-9485-a6ef63fe8341", 
-        "deleted": true,
+        "deleted": true
 }
 ```
 
@@ -336,11 +338,11 @@ This endpoint is used to delete an existing pedigree from the server.
 
 ```shell
 
-curl 'https://probandapp.com/connect/published/P123212/' \
+curl 'https://probandapp.com/connect/published/P123456/' \
   -H 'Authorization: f8f6ba3b39e83568ea17135d3a836d93e84caf93'
 ```
 
-> This will return a `200 OK` if a pedigree with identifier `P123212` is published and available. This identifier is not the UUID, but a family or patient identifier associatied with the patient. If no pedigree is available a `404` is returned.
+> This will return a `200 OK` if a pedigree with identifier `P123456` is published and available. This identifier is not the UUID, but a family or patient identifier associatied with the patient. If no pedigree is available a `404` is returned.
 
 This endpoint is meant to be used as part of a 3rd party integrations and will require additional setup to associate identifiers. It responds with a `200 OK` if a PDF of the pedigree with the passed in identifier is available.
 
@@ -397,11 +399,11 @@ count     | Integer | Number of UUIDs requested. Optional. Default is 50.
 
 ```shell
 
-curl 'https://probandapp.com/connect/pdf/P123212/' \
+curl 'https://probandapp.com/connect/pdf/P123456/' \
   -H 'Authorization: f8f6ba3b39e83568ea17135d3a836d93e84caf93'
 ```
 
-> Returns a PDF associated with the passed in identiier. This identifier is not the UUID, but a family or patient identifier associatied with the patient. If no PDF is available a `404` is returned.
+> Returns a PDF associated with the passed in identifier. This identifier is not the UUID, but a family or patient identifier associatied with the patient. If no PDF is available a `404` is returned.
 
 
 Get a published PDF for a pedigree. This endpoint is meant to be used as part of a 3rd party integrations and will require additional setup to associate identifiers. It with a PDF of the pedigree if available or a `404` if not.
