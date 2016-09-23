@@ -362,7 +362,7 @@ This endpoint is meant to be used as part of a 3rd party integrations and will r
 
 `/uuids/`
 
-# GET
+## GET
 
 ```shell
 
