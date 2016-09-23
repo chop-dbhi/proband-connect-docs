@@ -16,6 +16,8 @@ search: true
 
 This is the documentation for the Proband Connect REST API. Each pedigree is by default represented by a UUID. Optionally, with some local customization, there is also a general identifer that can be established which is used by the `/published/` and `/pdf/` 3rd party integration endpoints (described below).
 
+The documentation assumes a Proband Connect server running at https://probandapp.com/connect/ for demonstration purposes.
+ 
 # Authentication
 
 `/api-token-auth/`
