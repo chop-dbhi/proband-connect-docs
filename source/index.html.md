@@ -109,7 +109,7 @@ offset    | Integer | Index within the results to return from. Optional. Default
 
 # Pedigrees
 
-`/pedigrees`
+`/pedigrees/`
 
 ## GET
 
@@ -161,11 +161,11 @@ curl 'https://probandapp.com/connect/pedigrees/' \
   "failed":  [ { "uuid": "cb434cab-aae6-4e21-9485-a6ef63fe8341", 
                  "error": "UUID Unknown" },
   ],
-  "success": [ { "uuid": "cb434cab-aae6-4e21-9485-a6ef63fe8341",
+  "success": [ { "uuid": "30696ab6-e16a-407e-9cf5-2c034bc5961a",
                  "version": 3,
-                 "hash": "MD5 HASH of content "},
+                 "hash": "6D0A1F7187052E31F95907D0D0FD1DFF"},
   ],
-  "deleted": ["asdkjfklasdjflkasjdflkjasdflksdjafkljsd",]
+  "deleted": ["5f330460-74bf-4840-bb9c-92a341071725",]
 }
 
 ```
@@ -207,7 +207,7 @@ curl 'https://probandapp.com/connect/pedigree/cb434cab-aae6-4e21-9485-a6ef63fe83
         "update": true, 
         "version" : 2,
         "uuid": "cb434cab-aae6-4e21-9485-a6ef63fe8341", 
-        "hash": "<MD5 Hash of Pedigree>",
+        "hash": "6D0A1F7187052E31F95907D0D0FD1DFF",
         "content":"<pedigree></pedigree>", 
         "user": "probanduser", 
         "device": "<device/activity ID>",
@@ -248,7 +248,7 @@ curl 'https://probandapp.com/connect/pedigree/' \
 ```json
 { 
         "uuid": "cb434cab-aae6-4e21-9485-a6ef63fe8341", 
-        "hash": "<MD5 Hash of Pedigree>",
+        "hash": "6D0A1F7187052E31F95907D0D0FD1DFF",
         "published": false,
         "version": 1
 }
@@ -274,7 +274,7 @@ published | String  | Base64 encoded PDF of pedigree. Optional. Only use if you 
 
 ```shell
 
-curl 'https://probandapp.com/connect/pedigree/1aksjdfl2j3q234lskdjfadfjhj9' \
+curl 'https://probandapp.com/connect/pedigree/cb434cab-aae6-4e21-9485-a6ef63fe8341/' \
       -H 'Content-Type: application/json' \
       -H 'Authorization: f8f6ba3b39e83568ea17135d3a836d93e84caf93' \
       -X PUT \
@@ -289,7 +289,7 @@ curl 'https://probandapp.com/connect/pedigree/1aksjdfl2j3q234lskdjfadfjhj9' \
 ```json
 { 
         "uuid": "cb434cab-aae6-4e21-9485-a6ef63fe8341", 
-        "hash": "<MD5 Hash of Pedigree>",
+        "hash": "6D0A1F7187052E31F95907D0D0FD1DFF",
         "published": false, 
         "version": 4
 }
@@ -299,7 +299,7 @@ This endpoint is used to update an existing pedigree.
 
 ### HTTP Request
 
-`PUT  https://probandapp.com/connect/pedigree/1aksjdfl2j3q234lskdjfadfjhj9/`
+`PUT  https://probandapp.com/connect/pedigree/cb434cab-aae6-4e21-9485-a6ef63fe8341/`
 
 ### PUT JSON Payload
 
@@ -317,7 +317,7 @@ force     | Boolean | Whether to force write this pedigree if there is a conflic
 
 ```shell
 
-curl 'https://probandapp.com/connect/pedigree/1aksjdfl2j3q234lskdjfadfjhj9/' \
+curl 'https://probandapp.com/connect/pedigree/cb434cab-aae6-4e21-9485-a6ef63fe8341/' \
   -X DELETE \
   -H 'Authorization: f8f6ba3b39e83568ea17135d3a836d93e84caf93'
 ```
@@ -335,11 +335,11 @@ This endpoint is used to delete an existing pedigree from the server.
 
 ### HTTP Request
 
-`DELETE  https://probandapp.com/connect/pedigree/1aksjdfl2j3q234lskdjfadfjhj9/`
+`DELETE  https://probandapp.com/connect/pedigree/cb434cab-aae6-4e21-9485-a6ef63fe8341/`
 
 # Published
 
-`/published/<PATIENT OR FAMILY ID>`
+`/published/<PATIENT OR FAMILY ID>/`
 
 ## GET
 
@@ -356,7 +356,7 @@ This endpoint is meant to be used as part of a 3rd party integrations and will r
 
 ### HTTP Request
 
-`GET https://probandapp.com/connect/published/<PATIENT OR FAMILY ID>`
+`GET https://probandapp.com/connect/published/<PATIENT OR FAMILY ID>/`
 
 # UUIDS
 
@@ -400,7 +400,7 @@ count     | Integer | Number of UUIDs requested. Optional. Default is 50.
 
 # PDF
 
-`/pdf/<PATIENT OR FAMILY ID>`
+`/pdf/<PATIENT OR FAMILY ID>/`
 
 ## GET
 
@@ -417,7 +417,7 @@ Get a published PDF for a pedigree. This endpoint is meant to be used as part of
 
 ### HTTP Request
 
-`GET https://probandapp.com/connect/pdf/<PATIENT OR FAMILY ID>`
+`GET https://probandapp.com/connect/pdf/<PATIENT OR FAMILY ID>/`
 
 
 
