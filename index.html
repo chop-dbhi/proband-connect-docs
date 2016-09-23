@@ -124,6 +124,8 @@
 
 <p><code class="prettyprint">/api-token-auth/</code></p>
 
+<h2 id="post">POST</h2>
+
 <blockquote>
 <p>To get a valid session id, use the following code</p>
 </blockquote>
@@ -140,7 +142,9 @@ curl <span class="s1">'https://probandapp.com/connect/api-token-auth/'</span> <s
 <blockquote>
 <p>The above command returns JSON structured like this:</p>
 </blockquote>
-<pre class="highlight json"><code><span class="w">    </span><span class="p">{</span><span class="nt">"token"</span><span class="p">:</span><span class="s2">"f8f6ba3b39e83568ea17135d3a836d93e84caf93"</span><span class="p">}</span><span class="w">
+<pre class="highlight json"><code><span class="w">
+    </span><span class="p">{</span><span class="nt">"token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f8f6ba3b39e83568ea17135d3a836d93e84caf93"</span><span class="p">}</span><span class="w">
+
 </span></code></pre>
 
 <p>The Proband Connect API requires that you first obtain a session ID using a valid <code class="prettyprint">user</code>, <code class="prettyprint">password</code>, and <code class="prettyprint">device/activity id</code>. </p>
@@ -177,7 +181,7 @@ curl <span class="s1">'https://probandapp.com/connect/api-token-auth/'</span> <s
 
 <p>Proband Connect requires the returned seesion key to be included in all API requests to the server in a header that looks like the following:</p>
 
-<p>Authorization: f8f6ba3b39e83568ea17135d3a836d93e84caf93</p>
+<p><code class="prettyprint">Authorization: f8f6ba3b39e83568ea17135d3a836d93e84caf93</code></p>
 
 <h1 id="browse">Browse</h1>
 
