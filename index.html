@@ -1,0 +1,679 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Proband Connect API Reference</title>
+
+    <style>
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight, .highlight .w {
+  color: #f8f8f2;
+  background-color: #272822;
+}
+.highlight .err {
+  color: #151515;
+  background-color: #ac4142;
+}
+.highlight .c, .highlight .cd, .highlight .cm, .highlight .c1, .highlight .cs {
+  color: #505050;
+}
+.highlight .cp {
+  color: #f4bf75;
+}
+.highlight .nt {
+  color: #f4bf75;
+}
+.highlight .o, .highlight .ow {
+  color: #d0d0d0;
+}
+.highlight .p, .highlight .pi {
+  color: #d0d0d0;
+}
+.highlight .gi {
+  color: #90a959;
+}
+.highlight .gd {
+  color: #ac4142;
+}
+.highlight .gh {
+  color: #6a9fb5;
+  background-color: #151515;
+  font-weight: bold;
+}
+.highlight .k, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kv {
+  color: #aa759f;
+}
+.highlight .kc {
+  color: #d28445;
+}
+.highlight .kt {
+  color: #d28445;
+}
+.highlight .kd {
+  color: #d28445;
+}
+.highlight .s, .highlight .sb, .highlight .sc, .highlight .sd, .highlight .s2, .highlight .sh, .highlight .sx, .highlight .s1 {
+  color: #90a959;
+}
+.highlight .sr {
+  color: #75b5aa;
+}
+.highlight .si {
+  color: #8f5536;
+}
+.highlight .se {
+  color: #8f5536;
+}
+.highlight .nn {
+  color: #f4bf75;
+}
+.highlight .nc {
+  color: #f4bf75;
+}
+.highlight .no {
+  color: #f4bf75;
+}
+.highlight .na {
+  color: #6a9fb5;
+}
+.highlight .m, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mb, .highlight .mx {
+  color: #90a959;
+}
+.highlight .ss {
+  color: #90a959;
+}
+    </style>
+    <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" media="print" />
+      <script src="javascripts/all.js"></script>
+  </head>
+
+  <body class="index" data-languages="[&quot;shell&quot;]">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="images/navbar.png" />
+      </span>
+    </a>
+    <div class="tocify-wrapper">
+      <img src="images/logo.png" />
+        <div class="lang-selector">
+              <a href="#" data-language-name="shell">shell</a>
+        </div>
+        <div class="search">
+          <input type="text" class="search" id="input-search" placeholder="Search">
+        </div>
+        <ul class="search-results"></ul>
+      <div id="toc">
+      </div>
+        <ul class="toc-footer">
+            <li><a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a></li>
+        </ul>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        <h1 id="introduction">Introduction</h1>
+
+<p>This is the documentation for the Proband Connect REST API. Each pedigree is by default represented by a UUID. Optionally, with some local customization, there is also a general identifer that can be established which is used by the <code class="prettyprint">/published/</code> and <code class="prettyprint">/pdf/</code> 3rd party integration endpoints (described below).</p>
+
+<h1 id="authentication">Authentication</h1>
+
+<p><code class="prettyprint">/api-token-auth/</code></p>
+
+<blockquote>
+<p>To get a valid session id, use the following code</p>
+</blockquote>
+<pre class="highlight shell"><code>
+curl <span class="s1">'https://probandapp.com/connect/api-token-auth/'</span> <span class="se">\</span>
+      -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+     --data-binary <span class="s1">'{"username": "jeffmax",
+                     "password": "asecret",
+                     "device":   "20f89335b6f1811a86039d80022cf36b4cb27ae7"}'</span> <span class="se">\</span>
+     --compressed
+
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="w">    </span><span class="p">{</span><span class="nt">"token"</span><span class="p">:</span><span class="s2">"f8f6ba3b39e83568ea17135d3a836d93e84caf93"</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>The Proband Connect API requires that you first obtain a session ID using a valid <code class="prettyprint">user</code>, <code class="prettyprint">password</code>, and <code class="prettyprint">device/activity id</code>. </p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">POST http://probandapp.com/connect/api-token-auth/</code></p>
+
+<h4 id="json-post-payload">JSON POST Payload</h4>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>user</td>
+<td>Username</td>
+</tr>
+<tr>
+<td>pssword</td>
+<td>Password</td>
+</tr>
+<tr>
+<td>device</td>
+<td>Unique device/activity ID</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+ Each user must be configured with a device/activity ID for each unique device or role that will be accessing the API. This can be done through the Django Admin interface (it is called a DeviceToken in the admin). You can either create one associated to the user with a preset ID or leave the ID empty. If left empty, the first time the user authenticates and reports an ID, that ID will be assigned. From then on, only that ID will work.
+</aside>
+
+<p>Proband Connect requires the returned seesion key to be included in all API requests to the server in a header that looks like the following:</p>
+
+<p>Authorization: f8f6ba3b39e83568ea17135d3a836d93e84caf93</p>
+
+<h1 id="browse">Browse</h1>
+
+<p><code class="prettyprint">/pedigrees/browse/</code></p>
+
+<h2 id="get">GET</h2>
+<pre class="highlight shell"><code>
+curl <span class="s1">'https://probandapp.com/connect/pedigrees/browse/?filter=Doe'</span> <span class="se">\</span>
+  -H <span class="s1">'Authorization: f8f6ba3b39e83568ea17135d3a836d93e84caf93'</span>
+</code></pre>
+
+<blockquote>
+<p>Search all pedigrees the authenticated user has access to by pedigree name or group name. Returns a list of objects representing the matched pedigrees.</p>
+</blockquote>
+<pre class="highlight json"><code><span class="w">
+</span><span class="p">[</span><span class="w"> 
+  </span><span class="p">{</span><span class="w"> </span><span class="nt">"uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cb434cab-aae6-4e21-9485-a6ef63fe8341"</span><span class="p">,</span><span class="w"> 
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Doe"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"groups"</span><span class="p">:[</span><span class="w"> </span><span class="p">{</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Genetics"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"id"</span><span class="w">  </span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">},</span><span class="w">
+             </span><span class="p">]</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+</span><span class="p">]</span><span class="w">
+
+</span></code></pre>
+
+<p>Search for pedigrees by name or group. Returns 10 matches at a time. Use <code class="prettyprint">offset</code> parameter to paginate.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://probandapp.com/connect/browse/?filter=&lt;SEARCH STRING&gt;</code></p>
+
+<h3 id="get-query-params">GET Query Params</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>filter</td>
+<td>String</td>
+<td>Search string</td>
+</tr>
+<tr>
+<td>offset</td>
+<td>Integer</td>
+<td>Index within the results to return from. Optional. Defaults to 0.</td>
+</tr>
+</tbody></table>
+
+<h1 id="pedigrees">Pedigrees</h1>
+
+<p><code class="prettyprint">/pedigrees</code></p>
+
+<h2 id="get">GET</h2>
+<pre class="highlight shell"><code>
+curl <span class="s1">'https://probandapp.com/connect/pedigrees/'</span> <span class="se">\</span>
+  -H <span class="s1">'Authorization: f8f6ba3b39e83568ea17135d3a836d93e84caf93'</span>
+
+</code></pre>
+
+<blockquote>
+<p>This request will return a JSON list of objects containing the Pedigree UUID and list of groups the pedigree belongs to:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="w">
+</span><span class="p">[</span><span class="w"> 
+  </span><span class="p">{</span><span class="w"> </span><span class="nt">"uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cb434cab-aae6-4e21-9485-a6ef63fe8341"</span><span class="p">,</span><span class="w"> 
+    </span><span class="nt">"groups"</span><span class="p">:[</span><span class="w"> </span><span class="p">{</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Genetics"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"id"</span><span class="w">  </span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">},</span><span class="w">
+             </span><span class="p">]</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+</span><span class="p">]</span><span class="w">
+
+</span></code></pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p>Return a list of pedigrees the authenticated user has access to:</p>
+
+<p><code class="prettyprint">GET https://probandapp.com/connect/pedigrees/</code></p>
+
+<h2 id="post">POST</h2>
+<pre class="highlight shell"><code>
+curl <span class="s1">'https://probandapp.com/connect/pedigrees/'</span> <span class="se">\</span>
+      -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+      -H <span class="s1">'Authorization: f8f6ba3b39e83568ea17135d3a836d93e84caf93'</span> <span class="se">\</span>
+     --data-binary <span class="s1">'[{"force": false,
+                     "version" : 2,
+                     "uuid": "cb434cab-aae6-4e21-9485-a6ef63fe8341",
+                     "content": "&lt;pedigree&gt;&lt;/pedigree&gt;"},]'</span> <span class="se">\</span>
+     --compressed
+
+</code></pre>
+
+<blockquote>
+<p>This will return a list JSON objects listing which UUID updates failed, which succeeded, and which were deleted from the server (so could not be updated):</p>
+</blockquote>
+<pre class="highlight json"><code><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="nt">"failed"</span><span class="p">:</span><span class="w">  </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cb434cab-aae6-4e21-9485-a6ef63fe8341"</span><span class="p">,</span><span class="w"> 
+                 </span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"UUID Unknown"</span><span class="w"> </span><span class="p">},</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nt">"success"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cb434cab-aae6-4e21-9485-a6ef63fe8341"</span><span class="p">,</span><span class="w">
+                 </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+                 </span><span class="nt">"hash"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MD5 HASH of content "</span><span class="p">},</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nt">"deleted"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"asdkjfklasdjflkasjdflkjasdflksdjafkljsd"</span><span class="p">,]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+
+<p>This endpoint allows you to create/update multiple pedigrees at once.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">POST https://probandapp.com/connect/pedigrees/</code></p>
+
+<h4 id="json-post-payload">JSON POST Payload</h4>
+
+<p>A list of JSON objects, each with the follow properties:</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>force</td>
+<td>Boolean</td>
+<td>Whether or not to force write over a newer pedigree version</td>
+</tr>
+<tr>
+<td>content</td>
+<td>String</td>
+<td>XML pedigree</td>
+</tr>
+<tr>
+<td>uuid</td>
+<td>String</td>
+<td>Pedigree UUID</td>
+</tr>
+<tr>
+<td>version</td>
+<td>Integer</td>
+<td>Pedigree version</td>
+</tr>
+</tbody></table>
+
+<h1 id="pedigree">Pedigree</h1>
+
+<p><code class="prettyprint">/pedigree/</code></p>
+
+<h2 id="get">GET</h2>
+<pre class="highlight shell"><code>
+curl <span class="s1">'https://probandapp.com/connect/pedigree/cb434cab-aae6-4e21-9485-a6ef63fe8341/?ifNewer=1'</span> <span class="se">\</span>
+     -H <span class="s1">'Authorization: f8f6ba3b39e83568ea17135d3a836d93e84caf93'</span> 
+</code></pre>
+
+<blockquote>
+<p>This will return a JSON object representing the pedigree with UUID <code class="prettyprint">cb434cab-aae6-4e21-9485-a6ef63fe8341</code> if there is a version on the server newer than 1. The <code class="prettyprint">ifNewer</code> parameter is optional. The update parameter is only included if the <code class="prettyprint">ifNewer</code> query param is included. If the returned <code class="prettyprint">update</code> propery is false, there will be no <code class="prettyprint">content</code> property supplied in the return (because the requestor already has it.)</p>
+</blockquote>
+<pre class="highlight json"><code><span class="w"> </span><span class="p">{</span><span class="w"> 
+        </span><span class="nt">"update"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> 
+        </span><span class="nt">"version"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cb434cab-aae6-4e21-9485-a6ef63fe8341"</span><span class="p">,</span><span class="w"> 
+        </span><span class="nt">"hash"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;MD5 Hash of Pedigree&gt;"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"content"</span><span class="p">:</span><span class="s2">"&lt;pedigree&gt;&lt;/pedigree&gt;"</span><span class="p">,</span><span class="w"> 
+        </span><span class="nt">"user"</span><span class="p">:</span><span class="w"> </span><span class="s2">"probanduser"</span><span class="p">,</span><span class="w"> 
+        </span><span class="nt">"device"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;device/activity ID&gt;"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"published"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> 
+        </span><span class="nt">"groups"</span><span class="p">:[{</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"genetics"</span><span class="p">,</span><span class="w"> </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">},]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<blockquote>
+<p>The <code class="prettyprint">published</code> parameter refers to whether the pedigree has been marked as published and has a PDF available.</p>
+</blockquote>
+
+<p>This endpoint is used to retrieve a pedigree using its UUID. </p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET  https://probandapp.com/connect/pedigree/&lt;UUID&gt;/</code></p>
+
+<h4 id="get-query-params">GET Query Params</h4>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ifNewer</td>
+<td>Integer</td>
+<td>Specify the version you currently have- if the server does not have a newer version, it won&rsquo;t return the pedigree. Optional.</td>
+</tr>
+</tbody></table>
+
+<h2 id="post">POST</h2>
+<pre class="highlight shell"><code>
+curl <span class="s1">'https://probandapp.com/connect/pedigree/'</span> <span class="se">\</span>
+      -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+      -H <span class="s1">'Authorization: f8f6ba3b39e83568ea17135d3a836d93e84caf93'</span> <span class="se">\</span>
+     --data-binary <span class="s1">'{"uuid": "cb434cab-aae6-4e21-9485-a6ef63fe8341",
+                     "content": "&lt;pedigree&gt;&lt;/pedigree&gt;"},]'</span>,
+                     <span class="s2">"version"</span>: 0<span class="o">}</span><span class="s1">'
+     --compressed
+</span></code></pre>
+
+<blockquote>
+<p>This will create a new pedigree with the supplied UUID. It will return a JSON object representing the status of the new pedigree:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w"> 
+        </span><span class="nt">"uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cb434cab-aae6-4e21-9485-a6ef63fe8341"</span><span class="p">,</span><span class="w"> 
+        </span><span class="nt">"hash"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;MD5 Hash of Pedigree&gt;"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"published"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint is used to create a new pedigree. </p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">POST  https://probandapp.com/connect/pedigree/</code></p>
+
+<h3 id="post-json-payload">POST JSON Payload</h3>
+
+<p>A JSON object with the following properties</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>content</td>
+<td>String</td>
+<td>XML pedigree</td>
+</tr>
+<tr>
+<td>uuid</td>
+<td>String</td>
+<td>Pedigree UUID</td>
+</tr>
+<tr>
+<td>version</td>
+<td>Integer</td>
+<td>Pedigree version, should only ever be 0</td>
+</tr>
+<tr>
+<td>published</td>
+<td>String</td>
+<td>Base64 encoded PDF of pedigree. Optional. Only use if you want to mark pedigree as published and make a PDF accessible to 3rd parties</td>
+</tr>
+</tbody></table>
+
+<h2 id="put">PUT</h2>
+<pre class="highlight shell"><code>
+curl <span class="s1">'https://probandapp.com/connect/pedigree/1aksjdfl2j3q234lskdjfadfjhj9'</span> <span class="se">\</span>
+      -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+      -H <span class="s1">'Authorization: f8f6ba3b39e83568ea17135d3a836d93e84caf93'</span> <span class="se">\</span>
+      -X PUT <span class="se">\</span>
+      --data-binary <span class="s1">'{"content": "&lt;pedigree&gt;&lt;/pedigree&gt;"},]'</span>,
+                      <span class="s2">"version"</span>: 3,
+                      <span class="s2">"force"</span>: <span class="nb">false</span> <span class="o">}</span><span class="s1">'
+     --compressed
+</span></code></pre>
+
+<blockquote>
+<p>This will update the pedigree specified in the URL. It will return a JSON object representing the current status of the pedigree:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w"> 
+        </span><span class="nt">"uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cb434cab-aae6-4e21-9485-a6ef63fe8341"</span><span class="p">,</span><span class="w"> 
+        </span><span class="nt">"hash"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;MD5 Hash of Pedigree&gt;"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"published"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> 
+        </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint is used to update an existing pedigree. </p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">PUT  https://probandapp.com/connect/pedigree/1aksjdfl2j3q234lskdjfadfjhj9/</code></p>
+
+<h3 id="put-json-payload">PUT JSON Payload</h3>
+
+<p>A JSON object with the following properties:</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>content</td>
+<td>String</td>
+<td>XML pedigree</td>
+</tr>
+<tr>
+<td>uuid</td>
+<td>String</td>
+<td>Pedigree UUID</td>
+</tr>
+<tr>
+<td>version</td>
+<td>Integer</td>
+<td>Pedigree version, should only ever be 0</td>
+</tr>
+<tr>
+<td>published</td>
+<td>String</td>
+<td>Base64 encoded PDF of pedigree. Optional. Only use if you want to mark pedigree as published and make a PDF accessible to 3rd parties</td>
+</tr>
+<tr>
+<td>force</td>
+<td>Boolean</td>
+<td>Whether to force write this pedigree if there is a conflict. Optional.</td>
+</tr>
+</tbody></table>
+
+<h2 id="delete">DELETE</h2>
+<pre class="highlight shell"><code>
+curl <span class="s1">'https://probandapp.com/connect/pedigree/1aksjdfl2j3q234lskdjfadfjhj9/'</span> <span class="se">\</span>
+  -X DELETE <span class="se">\</span>
+  -H <span class="s1">'Authorization: f8f6ba3b39e83568ea17135d3a836d93e84caf93'</span>
+</code></pre>
+
+<blockquote>
+<p>This command will delete the pedigree specified in the URL. It will return a JSON object confirming the action:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w"> 
+        </span><span class="nt">"uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cb434cab-aae6-4e21-9485-a6ef63fe8341"</span><span class="p">,</span><span class="w"> 
+        </span><span class="nt">"deleted"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint is used to delete an existing pedigree from the server.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">DELETE  https://probandapp.com/connect/pedigree/1aksjdfl2j3q234lskdjfadfjhj9/</code></p>
+
+<h1 id="published">Published</h1>
+
+<p><code class="prettyprint">/published/&lt;PATIENT OR FAMILY ID&gt;</code></p>
+
+<h2 id="get">GET</h2>
+<pre class="highlight shell"><code>
+curl <span class="s1">'https://probandapp.com/connect/published/P123456/'</span> <span class="se">\</span>
+  -H <span class="s1">'Authorization: f8f6ba3b39e83568ea17135d3a836d93e84caf93'</span>
+</code></pre>
+
+<blockquote>
+<p>This will return a <code class="prettyprint">200 OK</code> if a pedigree with identifier <code class="prettyprint">P123456</code> is published and available. This identifier is not the UUID, but a family or patient identifier associatied with the patient. If no pedigree is available a <code class="prettyprint">404</code> is returned.</p>
+</blockquote>
+
+<p>This endpoint is meant to be used as part of a 3rd party integrations and will require additional setup to associate identifiers. It responds with a <code class="prettyprint">200 OK</code> if a PDF of the pedigree with the passed in identifier is available.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://probandapp.com/connect/published/&lt;PATIENT OR FAMILY ID&gt;</code></p>
+
+<h1 id="uuids">UUIDS</h1>
+
+<p><code class="prettyprint">/uuids/</code></p>
+
+<h1 id="get">GET</h1>
+<pre class="highlight shell"><code>
+curl <span class="s1">'https://probandapp.com/connect/uuids/?count=5'</span> <span class="se">\</span>
+  -H <span class="s1">'Authorization: f8f6ba3b39e83568ea17135d3a836d93e84caf93'</span>
+</code></pre>
+
+<blockquote>
+<p>Returns 5 UUIDs to be used to create new pedigrees by the requesting users. If no <code class="prettyprint">count</code> param is supplied, 50 is the default.</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">[</span><span class="w">
+
+   </span><span class="s2">"cb434cab-aae6-4e21-9485-a6ef63fe8341"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"5f330460-74bf-4840-bb9c-92a341071725"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"a09a3f2c-d429-47e6-87bf-7e2d3ef46cca"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"30696ab6-e16a-407e-9cf5-2c034bc5961a"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"8b263948-098f-4711-be3a-08f25abadc5d"</span><span class="w">
+
+</span><span class="p">]</span><span class="w">
+
+</span></code></pre>
+
+<p>Get UUIDS for creating new pedigrees. The server is responsible for generating all UUIDs.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET  https://probandapp.com/connect/uuids/</code></p>
+
+<h3 id="get-query-params">GET Query Params</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>count</td>
+<td>Integer</td>
+<td>Number of UUIDs requested. Optional. Default is 50.</td>
+</tr>
+</tbody></table>
+
+<h1 id="pdf">PDF</h1>
+
+<p><code class="prettyprint">/pdf/&lt;PATIENT OR FAMILY ID&gt;</code></p>
+
+<h2 id="get">GET</h2>
+<pre class="highlight shell"><code>
+curl <span class="s1">'https://probandapp.com/connect/pdf/P123456/'</span> <span class="se">\</span>
+  -H <span class="s1">'Authorization: f8f6ba3b39e83568ea17135d3a836d93e84caf93'</span>
+</code></pre>
+
+<blockquote>
+<p>Returns a PDF associated with the passed in identifier. This identifier is not the UUID, but a family or patient identifier associatied with the patient. If no PDF is available a <code class="prettyprint">404</code> is returned.</p>
+</blockquote>
+
+<p>Get a published PDF for a pedigree. This endpoint is meant to be used as part of a 3rd party integrations and will require additional setup to associate identifiers. It with a PDF of the pedigree if available or a <code class="prettyprint">404</code> if not.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://probandapp.com/connect/pdf/&lt;PATIENT OR FAMILY ID&gt;</code></p>
+
+          <h1 id="errors">Errors</h1>
+
+<p>The Proband Connect API may return the following errors:</p>
+
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>400</td>
+<td>Bad Request &ndash; Generic bad request error</td>
+</tr>
+<tr>
+<td>401</td>
+<td>Unauthorized &ndash; Device or user is not authorized</td>
+</tr>
+<tr>
+<td>403</td>
+<td>Forbidden &ndash; User does not have permission to access resource</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Not Found &ndash; The resource does not exist</td>
+</tr>
+<tr>
+<td>406</td>
+<td>Not Acceptable &ndash; You requested a format that isn&rsquo;t json</td>
+</tr>
+<tr>
+<td>409</td>
+<td>Confict &ndash; Attempting to create a resource that has already been created</td>
+</tr>
+<tr>
+<td>410</td>
+<td>Resource Gone &ndash; Resource has been deleted</td>
+</tr>
+<tr>
+<td>412</td>
+<td>Unknown or already used UUID</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal Server Error &ndash; Please report this to the Proband team</td>
+</tr>
+</tbody></table>
+
+      </div>
+      <div class="dark-box">
+          <div class="lang-selector">
+                <a href="#" data-language-name="shell">shell</a>
+          </div>
+      </div>
+    </div>
+  </body>
+</html>
