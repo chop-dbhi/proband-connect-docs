@@ -239,7 +239,7 @@ curl <span class="s1">'https://probandapp.com/connect/pedigrees/browse/?filter=D
 
 <h1 id="pedigrees">Pedigrees</h1>
 
-<p><code class="prettyprint">/pedigrees</code></p>
+<p><code class="prettyprint">/pedigrees/</code></p>
 
 <h2 id="get">GET</h2>
 <pre class="highlight shell"><code>
@@ -289,11 +289,11 @@ curl <span class="s1">'https://probandapp.com/connect/pedigrees/'</span> <span c
   </span><span class="nt">"failed"</span><span class="p">:</span><span class="w">  </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cb434cab-aae6-4e21-9485-a6ef63fe8341"</span><span class="p">,</span><span class="w"> 
                  </span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"UUID Unknown"</span><span class="w"> </span><span class="p">},</span><span class="w">
   </span><span class="p">],</span><span class="w">
-  </span><span class="nt">"success"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cb434cab-aae6-4e21-9485-a6ef63fe8341"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"success"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"30696ab6-e16a-407e-9cf5-2c034bc5961a"</span><span class="p">,</span><span class="w">
                  </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
-                 </span><span class="nt">"hash"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MD5 HASH of content "</span><span class="p">},</span><span class="w">
+                 </span><span class="nt">"hash"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6D0A1F7187052E31F95907D0D0FD1DFF"</span><span class="p">},</span><span class="w">
   </span><span class="p">],</span><span class="w">
-  </span><span class="nt">"deleted"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"asdkjfklasdjflkasjdflkjasdflksdjafkljsd"</span><span class="p">,]</span><span class="w">
+  </span><span class="nt">"deleted"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"5f330460-74bf-4840-bb9c-92a341071725"</span><span class="p">,]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre>
@@ -354,7 +354,7 @@ curl <span class="s1">'https://probandapp.com/connect/pedigree/cb434cab-aae6-4e2
         </span><span class="nt">"update"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> 
         </span><span class="nt">"version"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
         </span><span class="nt">"uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cb434cab-aae6-4e21-9485-a6ef63fe8341"</span><span class="p">,</span><span class="w"> 
-        </span><span class="nt">"hash"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;MD5 Hash of Pedigree&gt;"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"hash"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6D0A1F7187052E31F95907D0D0FD1DFF"</span><span class="p">,</span><span class="w">
         </span><span class="nt">"content"</span><span class="p">:</span><span class="s2">"&lt;pedigree&gt;&lt;/pedigree&gt;"</span><span class="p">,</span><span class="w"> 
         </span><span class="nt">"user"</span><span class="p">:</span><span class="w"> </span><span class="s2">"probanduser"</span><span class="p">,</span><span class="w"> 
         </span><span class="nt">"device"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;device/activity ID&gt;"</span><span class="p">,</span><span class="w">
@@ -405,7 +405,7 @@ curl <span class="s1">'https://probandapp.com/connect/pedigree/'</span> <span cl
 </blockquote>
 <pre class="highlight json"><code><span class="p">{</span><span class="w"> 
         </span><span class="nt">"uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cb434cab-aae6-4e21-9485-a6ef63fe8341"</span><span class="p">,</span><span class="w"> 
-        </span><span class="nt">"hash"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;MD5 Hash of Pedigree&gt;"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"hash"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6D0A1F7187052E31F95907D0D0FD1DFF"</span><span class="p">,</span><span class="w">
         </span><span class="nt">"published"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
         </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -452,7 +452,7 @@ curl <span class="s1">'https://probandapp.com/connect/pedigree/'</span> <span cl
 
 <h2 id="put">PUT</h2>
 <pre class="highlight shell"><code>
-curl <span class="s1">'https://probandapp.com/connect/pedigree/1aksjdfl2j3q234lskdjfadfjhj9'</span> <span class="se">\</span>
+curl <span class="s1">'https://probandapp.com/connect/pedigree/cb434cab-aae6-4e21-9485-a6ef63fe8341/'</span> <span class="se">\</span>
       -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
       -H <span class="s1">'Authorization: f8f6ba3b39e83568ea17135d3a836d93e84caf93'</span> <span class="se">\</span>
       -X PUT <span class="se">\</span>
@@ -467,7 +467,7 @@ curl <span class="s1">'https://probandapp.com/connect/pedigree/1aksjdfl2j3q234ls
 </blockquote>
 <pre class="highlight json"><code><span class="p">{</span><span class="w"> 
         </span><span class="nt">"uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cb434cab-aae6-4e21-9485-a6ef63fe8341"</span><span class="p">,</span><span class="w"> 
-        </span><span class="nt">"hash"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;MD5 Hash of Pedigree&gt;"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"hash"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6D0A1F7187052E31F95907D0D0FD1DFF"</span><span class="p">,</span><span class="w">
         </span><span class="nt">"published"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> 
         </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -477,7 +477,7 @@ curl <span class="s1">'https://probandapp.com/connect/pedigree/1aksjdfl2j3q234ls
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">PUT  https://probandapp.com/connect/pedigree/1aksjdfl2j3q234lskdjfadfjhj9/</code></p>
+<p><code class="prettyprint">PUT  https://probandapp.com/connect/pedigree/cb434cab-aae6-4e21-9485-a6ef63fe8341/</code></p>
 
 <h3 id="put-json-payload">PUT JSON Payload</h3>
 
@@ -519,7 +519,7 @@ curl <span class="s1">'https://probandapp.com/connect/pedigree/1aksjdfl2j3q234ls
 
 <h2 id="delete">DELETE</h2>
 <pre class="highlight shell"><code>
-curl <span class="s1">'https://probandapp.com/connect/pedigree/1aksjdfl2j3q234lskdjfadfjhj9/'</span> <span class="se">\</span>
+curl <span class="s1">'https://probandapp.com/connect/pedigree/cb434cab-aae6-4e21-9485-a6ef63fe8341/'</span> <span class="se">\</span>
   -X DELETE <span class="se">\</span>
   -H <span class="s1">'Authorization: f8f6ba3b39e83568ea17135d3a836d93e84caf93'</span>
 </code></pre>
@@ -537,11 +537,11 @@ curl <span class="s1">'https://probandapp.com/connect/pedigree/1aksjdfl2j3q234ls
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">DELETE  https://probandapp.com/connect/pedigree/1aksjdfl2j3q234lskdjfadfjhj9/</code></p>
+<p><code class="prettyprint">DELETE  https://probandapp.com/connect/pedigree/cb434cab-aae6-4e21-9485-a6ef63fe8341/</code></p>
 
 <h1 id="published">Published</h1>
 
-<p><code class="prettyprint">/published/&lt;PATIENT OR FAMILY ID&gt;</code></p>
+<p><code class="prettyprint">/published/&lt;PATIENT OR FAMILY ID&gt;/</code></p>
 
 <h2 id="get">GET</h2>
 <pre class="highlight shell"><code>
@@ -557,7 +557,7 @@ curl <span class="s1">'https://probandapp.com/connect/published/P123456/'</span>
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://probandapp.com/connect/published/&lt;PATIENT OR FAMILY ID&gt;</code></p>
+<p><code class="prettyprint">GET https://probandapp.com/connect/published/&lt;PATIENT OR FAMILY ID&gt;/</code></p>
 
 <h1 id="uuids">UUIDS</h1>
 
@@ -608,7 +608,7 @@ curl <span class="s1">'https://probandapp.com/connect/uuids/?count=5'</span> <sp
 
 <h1 id="pdf">PDF</h1>
 
-<p><code class="prettyprint">/pdf/&lt;PATIENT OR FAMILY ID&gt;</code></p>
+<p><code class="prettyprint">/pdf/&lt;PATIENT OR FAMILY ID&gt;/</code></p>
 
 <h2 id="get">GET</h2>
 <pre class="highlight shell"><code>
@@ -624,7 +624,7 @@ curl <span class="s1">'https://probandapp.com/connect/pdf/P123456/'</span> <span
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://probandapp.com/connect/pdf/&lt;PATIENT OR FAMILY ID&gt;</code></p>
+<p><code class="prettyprint">GET https://probandapp.com/connect/pdf/&lt;PATIENT OR FAMILY ID&gt;/</code></p>
 
           <h1 id="errors">Errors</h1>
 
