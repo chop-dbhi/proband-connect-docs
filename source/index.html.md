@@ -20,6 +20,8 @@ This is the documentation for the Proband Connect REST API. Each pedigree is by 
 
 `/api-token-auth/`
 
+## POST
+
 > To get a valid session id, use the following code
 
 ```shell
@@ -36,7 +38,9 @@ curl 'https://probandapp.com/connect/api-token-auth/' \
 > The above command returns JSON structured like this:
 
 ```json
-    {"token":"f8f6ba3b39e83568ea17135d3a836d93e84caf93"}
+
+    {"token": "f8f6ba3b39e83568ea17135d3a836d93e84caf93"}
+
 ```
 
 The Proband Connect API requires that you first obtain a session ID using a valid `user`, `password`, and `device/activity id`. 
@@ -59,7 +63,7 @@ device     | Unique device/activity ID
 
 Proband Connect requires the returned seesion key to be included in all API requests to the server in a header that looks like the following:
 
-     Authorization: f8f6ba3b39e83568ea17135d3a836d93e84caf93
+`Authorization: f8f6ba3b39e83568ea17135d3a836d93e84caf93`
 
 # Browse
 `/pedigrees/browse/`
